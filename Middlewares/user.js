@@ -2,14 +2,16 @@ const { User } = require("../db/index");
 
 function UserMiddleWares(req, res, next) {
   let { username, password } = req.headers;
-  let res = User.findOne({
+  let ans = User.findOne({
     username: username,
     password: password,
   }).then((value) => {
     if (value) {
       next();
     } else {
-      alert("You are not User");
+      res.json({
+        message: "User not found",
+      });
     }
   });
 }
